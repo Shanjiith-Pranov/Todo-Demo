@@ -18,7 +18,7 @@ class Todo {
     }
     
     init() {
-        self.name = ""
+        self.name = "I forgot your name"
     }
     
 }
@@ -29,4 +29,4 @@ class Todo {
 
 
 
-//does it work?????????????
+
