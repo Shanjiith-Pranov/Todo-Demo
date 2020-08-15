@@ -21,7 +21,7 @@ class Todo: Codable {
         self.name = "I forgot your name"
     }
     
-    static func sampleData() -> [Todo] {
+    static func loadSampleData() -> [Todo] {
         let todos = [
             Todo(name: "Shave the cat"),
             Todo(name: "Go see a doctor for deadly scratches")
@@ -35,10 +35,10 @@ class Todo: Codable {
         return documentsDirectory.appendingPathComponent(plistName).appendingPathExtension("plist")
     }
 
-    static func saveToFile(friends: [Todo]) {
+    static func saveToFile(todos: [Todo]) {
         let archiveURL = getArchiveURL()
         let propertyListEncoder = PropertyListEncoder()
-        let encodedFriends = try? propertyListEncoder.encode(friends)
+        let encodedFriends = try? propertyListEncoder.encode(todos)
         try? encodedFriends?.write(to: archiveURL, options: .noFileProtection)
     }
 

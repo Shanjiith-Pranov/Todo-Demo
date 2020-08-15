@@ -10,7 +10,8 @@ import UIKit
 
 class TodoTableViewController: UITableViewController {
     
-    var todos = Todo.sampleData()
+    var todos: [Todo] = []
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,13 @@ class TodoTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          self.navigationItem.leftBarButtonItem = self.editButtonItem
+        if let loadedTodos = Todo.loadFromFile() {
+            print("Found file! Loading friends!")
+            todos = loadedTodos // ha ha, loaded friends 💰🤑💰
+        } else {
+            print("No friends 😢 Making some up")
+            todos = Todo.loadSampleData()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,6 +78,8 @@ class TodoTableViewController: UITableViewController {
             // Delete the row from the data source
             todos.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
+            Todo.saveToFile(todos: todos)
+
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
@@ -81,6 +91,7 @@ class TodoTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
         let todo = todos.remove(at: fromIndexPath.row)
         todos.insert(todo, at: to.row)
+        Todo.saveToFile(todos: todos)
         tableView.reloadData()
     }
     
@@ -125,6 +136,7 @@ class TodoTableViewController: UITableViewController {
             if source.isNewTodo {
                 todos.append(source.todo)
                 tableView.reloadData() // this doesn't work... hmph
+                Todo.saveToFile(todos: todos)
             }
             
         }
