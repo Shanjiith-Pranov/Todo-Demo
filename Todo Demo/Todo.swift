@@ -18,7 +18,7 @@ class Todo: Codable {
     }
     
     init() {
-        self.name = "I forgot your name"
+        self.name = ""
     }
     
     static func loadSampleData() -> [Todo] {

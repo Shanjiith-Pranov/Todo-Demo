@@ -34,6 +34,7 @@ class TodoTableViewController: UITableViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         tableView.reloadData()
+        Todo.saveToFile(todos: todos)
     }
 
     // MARK: - Table view data source
@@ -118,12 +119,14 @@ class TodoTableViewController: UITableViewController {
             let destination = nav.viewControllers.first as! EditTodoTableViewController
             destination.todo = Todo() // give it an empty one
             destination.isNewTodo = true
+            Todo.saveToFile(todos: todos)
             
         } else if segue.identifier == "editTodo" {
             
             let destination = segue.destination as! EditTodoTableViewController
             let selectedIndexPath = tableView.indexPathForSelectedRow!
             destination.todo = todos[selectedIndexPath.row]
+            Todo.saveToFile(todos: todos)
             
         }
     }
